@@ -25,7 +25,7 @@ function News() {
         <div className="grid gap-4 md:grid-cols-3">{db.galleries.map((g) => <button key={g.id} onClick={() => setGal(g)} className="card card-lift overflow-hidden text-left"><Img k={g.img} alt={g.title} className="aspect-[4/3] w-full" /><div className="p-4"><p className="font-bold">{g.title}</p><p className="text-sm text-muted-foreground">{g.category} · {g.photos} photos</p></div></button>)}</div>
       </Section>
       <Modal open={!!ev} onClose={() => setEv(null)} title={ev?.title ?? ""}>{ev && <RegisterForm title={ev.title} kind="Event registration" onDone={() => setEv(null)} />}</Modal>
-      <Modal open={!!gal} onClose={() => setGal(null)} title={gal?.title ?? ""} wide>{gal && <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">{Array.from({ length: 6 }, (_, i) => <Img key={i} k={["hero", "martial", "gym"][(i + gal.id.length) % 3]} alt={`${gal.title} photo ${i + 1}`} className="aspect-square w-full rounded-lg" />)}</div>}</Modal>
+      <Modal open={!!gal} onClose={() => setGal(null)} title={gal?.title ?? ""} wide>{gal && <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">{Array.from({ length: 6 }, (_, i) => <Img key={i} k={["hero", "martial", "gym"][(i + gal.id.length) % 3] ?? "hero"} alt={`${gal.title} photo ${i + 1}`} className="aspect-square w-full rounded-lg" />)}</div>}</Modal>
     </Site>
   );
 }

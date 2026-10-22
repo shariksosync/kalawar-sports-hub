@@ -43,7 +43,7 @@ function Federation() {
         <div className="mt-8"><Link to="/verify" className="btn btn-navy">Verify a certificate</Link></div>
       </Section>
       <Section title="Coaches, referees & officials">
-        <div className="grid gap-3 md:grid-cols-3">{[...db.referees.map((r) => ({ ...r, role: `Referee · ${r.level}` })), ...db.officials].map((r) => <div key={r.id} className="card p-4"><p className="font-bold">{r.name}</p><p className="text-sm text-muted-foreground">{r.role} · {r.sport}</p><StatusPill s={r.status} /></div>)}</div>
+        <div className="grid gap-3 md:grid-cols-3">{[...db.referees.map((r: Rec) => ({ ...r, role: `Referee · ${r.level}` })), ...db.officials].map((r: any) => <div key={r.id} className="card p-4"><p className="font-bold">{r.name}</p><p className="text-sm text-muted-foreground">{r.role} · {r.sport}</p><StatusPill s={r.status} /></div>)}</div>
       </Section>
       <Modal open={!!exam} onClose={() => setExam(null)} title={exam?.title ?? ""}>{exam && <RegisterForm title={exam.title} kind="Examination enrollment" fee={exam.fee} extra={[{ name: "memberId", label: "Membership number", placeholder: "KS-M-1001", required: true }, { name: "belt", label: "Current belt", type: "select", options: ["White", "Yellow", "Green", "Blue", "Red", "Brown", "Black"] }]} onDone={() => setExam(null)} />}</Modal>
       <Modal open={aff} onClose={() => setAff(false)} title="Affiliation application">{aff && <RegisterForm title="Affiliation" kind="Affiliation application" extra={[{ name: "academy", label: "Academy name", required: true }, { name: "action", label: "Request", type: "select", options: ["New affiliation", "Renewal"], required: true }]} onDone={() => setAff(false)} />}</Modal>

@@ -12,6 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AcademiesRouteImport } from './routes/academies'
+import { Route as AccountRouteImport } from './routes/account'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AdminLoginRouteImport } from './routes/admin-login'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as ChampionshipsRouteImport } from './routes/championships'
 import { Route as CheckoutRouteImport } from './routes/checkout'
@@ -21,9 +24,13 @@ import { Route as FederationRouteImport } from './routes/federation'
 import { Route as GymRouteImport } from './routes/gym'
 import { Route as MediaRouteImport } from './routes/media'
 import { Route as NewsRouteImport } from './routes/news'
+import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as OrdersRouteImport } from './routes/orders'
+import { Route as SearchRouteImport } from './routes/search'
 import { Route as ShopRouteImport } from './routes/shop'
+import { Route as VerifyRouteImport } from './routes/verify'
 import { Route as WishlistRouteImport } from './routes/wishlist'
+import { Route as PolicySlugRouteImport } from './routes/policy.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -38,6 +45,21 @@ const AboutRoute = AboutRouteImport.update({
 const AcademiesRoute = AcademiesRouteImport.update({
   id: '/academies',
   path: '/academies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountRoute = AccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin-login',
+  path: '/admin-login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CartRoute = CartRouteImport.update({
@@ -85,9 +107,19 @@ const NewsRoute = NewsRouteImport.update({
   path: '/news',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NotificationsRoute = NotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OrdersRoute = OrdersRouteImport.update({
   id: '/orders',
   path: '/orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ShopRoute = ShopRouteImport.update({
@@ -95,9 +127,19 @@ const ShopRoute = ShopRouteImport.update({
   path: '/shop',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VerifyRoute = VerifyRouteImport.update({
+  id: '/verify',
+  path: '/verify',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WishlistRoute = WishlistRouteImport.update({
   id: '/wishlist',
   path: '/wishlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PolicySlugRoute = PolicySlugRouteImport.update({
+  id: '/policy/$slug',
+  path: '/policy/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -105,6 +147,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academies': typeof AcademiesRoute
+  '/account': typeof AccountRoute
+  '/admin': typeof AdminRoute
+  '/admin-login': typeof AdminLoginRoute
   '/cart': typeof CartRoute
   '/championships': typeof ChampionshipsRoute
   '/checkout': typeof CheckoutRoute
@@ -114,14 +159,21 @@ export interface FileRoutesByFullPath {
   '/gym': typeof GymRoute
   '/media': typeof MediaRoute
   '/news': typeof NewsRoute
+  '/notifications': typeof NotificationsRoute
   '/orders': typeof OrdersRoute
+  '/search': typeof SearchRoute
   '/shop': typeof ShopRoute
+  '/verify': typeof VerifyRoute
   '/wishlist': typeof WishlistRoute
+  '/policy/$slug': typeof PolicySlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academies': typeof AcademiesRoute
+  '/account': typeof AccountRoute
+  '/admin': typeof AdminRoute
+  '/admin-login': typeof AdminLoginRoute
   '/cart': typeof CartRoute
   '/championships': typeof ChampionshipsRoute
   '/checkout': typeof CheckoutRoute
@@ -131,15 +183,22 @@ export interface FileRoutesByTo {
   '/gym': typeof GymRoute
   '/media': typeof MediaRoute
   '/news': typeof NewsRoute
+  '/notifications': typeof NotificationsRoute
   '/orders': typeof OrdersRoute
+  '/search': typeof SearchRoute
   '/shop': typeof ShopRoute
+  '/verify': typeof VerifyRoute
   '/wishlist': typeof WishlistRoute
+  '/policy/$slug': typeof PolicySlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academies': typeof AcademiesRoute
+  '/account': typeof AccountRoute
+  '/admin': typeof AdminRoute
+  '/admin-login': typeof AdminLoginRoute
   '/cart': typeof CartRoute
   '/championships': typeof ChampionshipsRoute
   '/checkout': typeof CheckoutRoute
@@ -149,9 +208,13 @@ export interface FileRoutesById {
   '/gym': typeof GymRoute
   '/media': typeof MediaRoute
   '/news': typeof NewsRoute
+  '/notifications': typeof NotificationsRoute
   '/orders': typeof OrdersRoute
+  '/search': typeof SearchRoute
   '/shop': typeof ShopRoute
+  '/verify': typeof VerifyRoute
   '/wishlist': typeof WishlistRoute
+  '/policy/$slug': typeof PolicySlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -159,6 +222,9 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/academies'
+    | '/account'
+    | '/admin'
+    | '/admin-login'
     | '/cart'
     | '/championships'
     | '/checkout'
@@ -168,14 +234,21 @@ export interface FileRouteTypes {
     | '/gym'
     | '/media'
     | '/news'
+    | '/notifications'
     | '/orders'
+    | '/search'
     | '/shop'
+    | '/verify'
     | '/wishlist'
+    | '/policy/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/academies'
+    | '/account'
+    | '/admin'
+    | '/admin-login'
     | '/cart'
     | '/championships'
     | '/checkout'
@@ -185,14 +258,21 @@ export interface FileRouteTypes {
     | '/gym'
     | '/media'
     | '/news'
+    | '/notifications'
     | '/orders'
+    | '/search'
     | '/shop'
+    | '/verify'
     | '/wishlist'
+    | '/policy/$slug'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/academies'
+    | '/account'
+    | '/admin'
+    | '/admin-login'
     | '/cart'
     | '/championships'
     | '/checkout'
@@ -202,15 +282,22 @@ export interface FileRouteTypes {
     | '/gym'
     | '/media'
     | '/news'
+    | '/notifications'
     | '/orders'
+    | '/search'
     | '/shop'
+    | '/verify'
     | '/wishlist'
+    | '/policy/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AcademiesRoute: typeof AcademiesRoute
+  AccountRoute: typeof AccountRoute
+  AdminRoute: typeof AdminRoute
+  AdminLoginRoute: typeof AdminLoginRoute
   CartRoute: typeof CartRoute
   ChampionshipsRoute: typeof ChampionshipsRoute
   CheckoutRoute: typeof CheckoutRoute
@@ -220,9 +307,13 @@ export interface RootRouteChildren {
   GymRoute: typeof GymRoute
   MediaRoute: typeof MediaRoute
   NewsRoute: typeof NewsRoute
+  NotificationsRoute: typeof NotificationsRoute
   OrdersRoute: typeof OrdersRoute
+  SearchRoute: typeof SearchRoute
   ShopRoute: typeof ShopRoute
+  VerifyRoute: typeof VerifyRoute
   WishlistRoute: typeof WishlistRoute
+  PolicySlugRoute: typeof PolicySlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -246,6 +337,27 @@ declare module '@tanstack/react-router' {
       path: '/academies'
       fullPath: '/academies'
       preLoaderRoute: typeof AcademiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/account': {
+      id: '/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin-login': {
+      id: '/admin-login'
+      path: '/admin-login'
+      fullPath: '/admin-login'
+      preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cart': {
@@ -311,11 +423,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NewsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/orders': {
       id: '/orders'
       path: '/orders'
       fullPath: '/orders'
       preLoaderRoute: typeof OrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/shop': {
@@ -325,11 +451,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShopRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/verify': {
+      id: '/verify'
+      path: '/verify'
+      fullPath: '/verify'
+      preLoaderRoute: typeof VerifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/wishlist': {
       id: '/wishlist'
       path: '/wishlist'
       fullPath: '/wishlist'
       preLoaderRoute: typeof WishlistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/policy/$slug': {
+      id: '/policy/$slug'
+      path: '/policy/$slug'
+      fullPath: '/policy/$slug'
+      preLoaderRoute: typeof PolicySlugRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -339,6 +479,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AcademiesRoute: AcademiesRoute,
+  AccountRoute: AccountRoute,
+  AdminRoute: AdminRoute,
+  AdminLoginRoute: AdminLoginRoute,
   CartRoute: CartRoute,
   ChampionshipsRoute: ChampionshipsRoute,
   CheckoutRoute: CheckoutRoute,
@@ -348,9 +491,13 @@ const rootRouteChildren: RootRouteChildren = {
   GymRoute: GymRoute,
   MediaRoute: MediaRoute,
   NewsRoute: NewsRoute,
+  NotificationsRoute: NotificationsRoute,
   OrdersRoute: OrdersRoute,
+  SearchRoute: SearchRoute,
   ShopRoute: ShopRoute,
+  VerifyRoute: VerifyRoute,
   WishlistRoute: WishlistRoute,
+  PolicySlugRoute: PolicySlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

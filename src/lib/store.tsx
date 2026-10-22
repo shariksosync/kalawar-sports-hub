@@ -7,7 +7,7 @@ type Session = { email: string; name: string; role: string } | null;
 type User = { name: string; email: string; phone: string } | null;
 
 type Store = {
-  db: Record<string, Rec[]>;
+  db: typeof initialDb & Record<string, Rec[]>;
   upsert: (col: string, rec: Rec) => Rec;
   remove: (col: string, id: string) => void;
   cart: CartItem[];
