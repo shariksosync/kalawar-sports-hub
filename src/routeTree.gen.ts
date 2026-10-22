@@ -13,6 +13,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AcademiesRouteImport } from './routes/academies'
 import { Route as ChampionshipsRouteImport } from './routes/championships'
+import { Route as CoursesRouteImport } from './routes/courses'
+import { Route as FederationRouteImport } from './routes/federation'
+import { Route as GymRouteImport } from './routes/gym'
+import { Route as MediaRouteImport } from './routes/media'
+import { Route as NewsRouteImport } from './routes/news'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +39,53 @@ const ChampionshipsRoute = ChampionshipsRouteImport.update({
   path: '/championships',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CoursesRoute = CoursesRouteImport.update({
+  id: '/courses',
+  path: '/courses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FederationRoute = FederationRouteImport.update({
+  id: '/federation',
+  path: '/federation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GymRoute = GymRouteImport.update({
+  id: '/gym',
+  path: '/gym',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaRoute = MediaRouteImport.update({
+  id: '/media',
+  path: '/media',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsRoute = NewsRouteImport.update({
+  id: '/news',
+  path: '/news',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academies': typeof AcademiesRoute
   '/championships': typeof ChampionshipsRoute
+  '/courses': typeof CoursesRoute
+  '/federation': typeof FederationRoute
+  '/gym': typeof GymRoute
+  '/media': typeof MediaRoute
+  '/news': typeof NewsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academies': typeof AcademiesRoute
   '/championships': typeof ChampionshipsRoute
+  '/courses': typeof CoursesRoute
+  '/federation': typeof FederationRoute
+  '/gym': typeof GymRoute
+  '/media': typeof MediaRoute
+  '/news': typeof NewsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +93,46 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/academies': typeof AcademiesRoute
   '/championships': typeof ChampionshipsRoute
+  '/courses': typeof CoursesRoute
+  '/federation': typeof FederationRoute
+  '/gym': typeof GymRoute
+  '/media': typeof MediaRoute
+  '/news': typeof NewsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/academies' | '/championships'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/academies'
+    | '/championships'
+    | '/courses'
+    | '/federation'
+    | '/gym'
+    | '/media'
+    | '/news'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/academies' | '/championships'
-  id: '__root__' | '/' | '/about' | '/academies' | '/championships'
+  to:
+    | '/'
+    | '/about'
+    | '/academies'
+    | '/championships'
+    | '/courses'
+    | '/federation'
+    | '/gym'
+    | '/media'
+    | '/news'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/academies'
+    | '/championships'
+    | '/courses'
+    | '/federation'
+    | '/gym'
+    | '/media'
+    | '/news'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +140,11 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AcademiesRoute: typeof AcademiesRoute
   ChampionshipsRoute: typeof ChampionshipsRoute
+  CoursesRoute: typeof CoursesRoute
+  FederationRoute: typeof FederationRoute
+  GymRoute: typeof GymRoute
+  MediaRoute: typeof MediaRoute
+  NewsRoute: typeof NewsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +177,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChampionshipsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/courses': {
+      id: '/courses'
+      path: '/courses'
+      fullPath: '/courses'
+      preLoaderRoute: typeof CoursesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/federation': {
+      id: '/federation'
+      path: '/federation'
+      fullPath: '/federation'
+      preLoaderRoute: typeof FederationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gym': {
+      id: '/gym'
+      path: '/gym'
+      fullPath: '/gym'
+      preLoaderRoute: typeof GymRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media': {
+      id: '/media'
+      path: '/media'
+      fullPath: '/media'
+      preLoaderRoute: typeof MediaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/news': {
+      id: '/news'
+      path: '/news'
+      fullPath: '/news'
+      preLoaderRoute: typeof NewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +220,11 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AcademiesRoute: AcademiesRoute,
   ChampionshipsRoute: ChampionshipsRoute,
+  CoursesRoute: CoursesRoute,
+  FederationRoute: FederationRoute,
+  GymRoute: GymRoute,
+  MediaRoute: MediaRoute,
+  NewsRoute: NewsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
