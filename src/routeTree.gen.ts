@@ -10,33 +10,219 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AcademiesRouteImport } from './routes/academies'
+import { Route as CartRouteImport } from './routes/cart'
+import { Route as ChampionshipsRouteImport } from './routes/championships'
+import { Route as CheckoutRouteImport } from './routes/checkout'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CoursesRouteImport } from './routes/courses'
+import { Route as FederationRouteImport } from './routes/federation'
+import { Route as GymRouteImport } from './routes/gym'
+import { Route as MediaRouteImport } from './routes/media'
+import { Route as NewsRouteImport } from './routes/news'
+import { Route as OrdersRouteImport } from './routes/orders'
+import { Route as ShopRouteImport } from './routes/shop'
+import { Route as WishlistRouteImport } from './routes/wishlist'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AcademiesRoute = AcademiesRouteImport.update({
+  id: '/academies',
+  path: '/academies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CartRoute = CartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChampionshipsRoute = ChampionshipsRouteImport.update({
+  id: '/championships',
+  path: '/championships',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoursesRoute = CoursesRouteImport.update({
+  id: '/courses',
+  path: '/courses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FederationRoute = FederationRouteImport.update({
+  id: '/federation',
+  path: '/federation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GymRoute = GymRouteImport.update({
+  id: '/gym',
+  path: '/gym',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaRoute = MediaRouteImport.update({
+  id: '/media',
+  path: '/media',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsRoute = NewsRouteImport.update({
+  id: '/news',
+  path: '/news',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrdersRoute = OrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShopRoute = ShopRouteImport.update({
+  id: '/shop',
+  path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WishlistRoute = WishlistRouteImport.update({
+  id: '/wishlist',
+  path: '/wishlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/academies': typeof AcademiesRoute
+  '/cart': typeof CartRoute
+  '/championships': typeof ChampionshipsRoute
+  '/checkout': typeof CheckoutRoute
+  '/contact': typeof ContactRoute
+  '/courses': typeof CoursesRoute
+  '/federation': typeof FederationRoute
+  '/gym': typeof GymRoute
+  '/media': typeof MediaRoute
+  '/news': typeof NewsRoute
+  '/orders': typeof OrdersRoute
+  '/shop': typeof ShopRoute
+  '/wishlist': typeof WishlistRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/academies': typeof AcademiesRoute
+  '/cart': typeof CartRoute
+  '/championships': typeof ChampionshipsRoute
+  '/checkout': typeof CheckoutRoute
+  '/contact': typeof ContactRoute
+  '/courses': typeof CoursesRoute
+  '/federation': typeof FederationRoute
+  '/gym': typeof GymRoute
+  '/media': typeof MediaRoute
+  '/news': typeof NewsRoute
+  '/orders': typeof OrdersRoute
+  '/shop': typeof ShopRoute
+  '/wishlist': typeof WishlistRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/academies': typeof AcademiesRoute
+  '/cart': typeof CartRoute
+  '/championships': typeof ChampionshipsRoute
+  '/checkout': typeof CheckoutRoute
+  '/contact': typeof ContactRoute
+  '/courses': typeof CoursesRoute
+  '/federation': typeof FederationRoute
+  '/gym': typeof GymRoute
+  '/media': typeof MediaRoute
+  '/news': typeof NewsRoute
+  '/orders': typeof OrdersRoute
+  '/shop': typeof ShopRoute
+  '/wishlist': typeof WishlistRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/academies'
+    | '/cart'
+    | '/championships'
+    | '/checkout'
+    | '/contact'
+    | '/courses'
+    | '/federation'
+    | '/gym'
+    | '/media'
+    | '/news'
+    | '/orders'
+    | '/shop'
+    | '/wishlist'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/academies'
+    | '/cart'
+    | '/championships'
+    | '/checkout'
+    | '/contact'
+    | '/courses'
+    | '/federation'
+    | '/gym'
+    | '/media'
+    | '/news'
+    | '/orders'
+    | '/shop'
+    | '/wishlist'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/academies'
+    | '/cart'
+    | '/championships'
+    | '/checkout'
+    | '/contact'
+    | '/courses'
+    | '/federation'
+    | '/gym'
+    | '/media'
+    | '/news'
+    | '/orders'
+    | '/shop'
+    | '/wishlist'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  AcademiesRoute: typeof AcademiesRoute
+  CartRoute: typeof CartRoute
+  ChampionshipsRoute: typeof ChampionshipsRoute
+  CheckoutRoute: typeof CheckoutRoute
+  ContactRoute: typeof ContactRoute
+  CoursesRoute: typeof CoursesRoute
+  FederationRoute: typeof FederationRoute
+  GymRoute: typeof GymRoute
+  MediaRoute: typeof MediaRoute
+  NewsRoute: typeof NewsRoute
+  OrdersRoute: typeof OrdersRoute
+  ShopRoute: typeof ShopRoute
+  WishlistRoute: typeof WishlistRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +234,123 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/academies': {
+      id: '/academies'
+      path: '/academies'
+      fullPath: '/academies'
+      preLoaderRoute: typeof AcademiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/championships': {
+      id: '/championships'
+      path: '/championships'
+      fullPath: '/championships'
+      preLoaderRoute: typeof ChampionshipsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/courses': {
+      id: '/courses'
+      path: '/courses'
+      fullPath: '/courses'
+      preLoaderRoute: typeof CoursesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/federation': {
+      id: '/federation'
+      path: '/federation'
+      fullPath: '/federation'
+      preLoaderRoute: typeof FederationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gym': {
+      id: '/gym'
+      path: '/gym'
+      fullPath: '/gym'
+      preLoaderRoute: typeof GymRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media': {
+      id: '/media'
+      path: '/media'
+      fullPath: '/media'
+      preLoaderRoute: typeof MediaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/news': {
+      id: '/news'
+      path: '/news'
+      fullPath: '/news'
+      preLoaderRoute: typeof NewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/orders': {
+      id: '/orders'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof OrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shop': {
+      id: '/shop'
+      path: '/shop'
+      fullPath: '/shop'
+      preLoaderRoute: typeof ShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/wishlist': {
+      id: '/wishlist'
+      path: '/wishlist'
+      fullPath: '/wishlist'
+      preLoaderRoute: typeof WishlistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  AcademiesRoute: AcademiesRoute,
+  CartRoute: CartRoute,
+  ChampionshipsRoute: ChampionshipsRoute,
+  CheckoutRoute: CheckoutRoute,
+  ContactRoute: ContactRoute,
+  CoursesRoute: CoursesRoute,
+  FederationRoute: FederationRoute,
+  GymRoute: GymRoute,
+  MediaRoute: MediaRoute,
+  NewsRoute: NewsRoute,
+  OrdersRoute: OrdersRoute,
+  ShopRoute: ShopRoute,
+  WishlistRoute: WishlistRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
