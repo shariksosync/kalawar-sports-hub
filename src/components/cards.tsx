@@ -15,7 +15,7 @@ export function AcademyBrowser({ limit }: { limit?: number }) {
   return (
     <div>
       <div className="mb-6 grid gap-3 sm:grid-cols-3">
-        <select aria-label="Filter by sport" className="field" value={sport} onChange={(e) => setSport(e.target.value)}><option value="">All sports</option>{SPORTS.map((s) => <option key={s}>{s}</option>)}</select>
+        <select aria-label="Filter by sport" className="field" value={sport} onChange={(e) => setSport(e.target.value)}><option value="">All sports</option>{(db.sports?.filter((s) => s.status !== "Inactive").map((s) => s.name) ?? SPORTS).map((s) => <option key={s}>{s}</option>)}</select>
         <select aria-label="Filter by location" className="field" value={loc} onChange={(e) => setLoc(e.target.value)}><option value="">All locations</option>{states.map((s) => <option key={s}>{s}</option>)}</select>
         <select aria-label="Filter by academy type" className="field" value={type} onChange={(e) => setType(e.target.value)}><option value="">All types</option>{types.map((s) => <option key={s}>{s}</option>)}</select>
       </div>
@@ -38,7 +38,47 @@ export function AcademyBrowser({ limit }: { limit?: number }) {
       )}
       {list.length > shown && <div className="mt-6 text-center"><button className="btn btn-outline" onClick={() => setShown((s) => s + 6)}>Load more</button></div>}
       <Modal open={!!view} onClose={() => setView(null)} title={view?.name ?? ""} wide>
-        {view && <div className="space-y-3"><Img k={view.img} alt={view.name} className="aspect-[16/7] w-full rounded-xl" /><DemoTag /><p><b>Sport:</b> {view.sport} · <b>Type:</b> {view.type}</p><p><b>Location:</b> {view.city}, {view.state}</p><p><b>Head coach:</b> {view.coach}</p><p><b>Programs:</b> {view.programs}</p><p><b>Batches:</b> Mon–Sat, 6–7:30 AM & 5–6:30 PM (sample)</p><p><b>Branches:</b> {db.branches.filter((b) => b.academy === view.name).map((b) => b.name).join(", ") || "Main centre only"}</p><div className="flex gap-2"><button className="btn btn-primary" onClick={() => { setEnq(view); setView(null); }}>Book a trial class</button></div></div>}
+        {view && (
+          <div className="space-y-4">
+            <Img k={view.img} alt={view.name} className="aspect-[16/7] w-full rounded-xl" />
+            <div className="flex justify-between items-center">
+              <DemoTag>Affiliated Academy</DemoTag>
+              <Badge tone="ok">Admission: {view.status}</Badge>
+            </div>
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              <p><b>Sport:</b> {view.sport} · <b>Type:</b> {view.type}</p>
+              <p><b>Location:</b> {view.city}, {view.state}</p>
+              <p><b>Head Coach:</b> {view.coach}</p>
+              <p><b>Programs:</b> {view.programs}</p>
+              <p><b>Batches:</b> Mon–Sat, 6–7:30 AM & 5–6:30 PM</p>
+              <p><b>Branches:</b> {db.branches.filter((b: Rec) => b.academy === view.name).map((b: Rec) => b.name).join(", ") || "Main centre only"}</p>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 pt-2 border-t text-xs">
+              <div className="rounded-xl border p-3 bg-muted/40">
+                <p className="font-bold text-foreground uppercase tracking-wide">Fee Structure & Installments</p>
+                <div className="mt-2 space-y-1 text-muted-foreground">
+                  <p>• <b>Monthly Fee:</b> ₹1,200 (Single payment)</p>
+                  <p>• <b>Quarterly Plan:</b> ₹3,200 (2 Installments of ₹1,600)</p>
+                  <p>• <b>Annual Squad:</b> ₹9,500 (3 Installments)</p>
+                  <p className="text-[10px] text-primary mt-1">Official GST digital receipts issued upon admission</p>
+                </div>
+              </div>
+              <div className="rounded-xl border p-3 bg-muted/40">
+                <p className="font-bold text-foreground uppercase tracking-wide">Skill & Performance Syllabus</p>
+                <div className="mt-2 space-y-1 text-muted-foreground">
+                  <p>• <b>Belt Grading:</b> Aligned with KALAWAR Anukkama Syllabus</p>
+                  <p>• <b>Assessments:</b> Bi-monthly sparring and kata reviews</p>
+                  <p>• <b>National Representation:</b> State & District Team Trials</p>
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-2 pt-2">
+              <button className="btn btn-primary flex-1" onClick={() => { setEnq(view); setView(null); }}>
+                Book a Trial Class
+              </button>
+            </div>
+          </div>
+        )}
       </Modal>
       <Modal open={!!enq} onClose={() => setEnq(null)} title={`Enquire — ${enq?.name ?? ""}`}>
         {enq && <RegisterForm title={enq.name} kind="Admission enquiry" extra={[{ name: "type", label: "Enquiry type", type: "select", options: ["Admission", "Trial class", "Fees"], required: true }, { name: "msg", label: "Message", type: "textarea" }]} onDone={() => setEnq(null)} />}

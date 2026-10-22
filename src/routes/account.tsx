@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { clean, inr, isEmail, isPhone, uid, useStore } from "@/lib/store";
-import { Badge, DemoTag, Empty, Icon, PageHero, QrMock, Section, statusTone } from "@/components/kit";
+import { Badge, DemoTag, Empty, Icon, Modal, PageHero, QrMock, Section, statusTone } from "@/components/kit";
 import { Site, StatusPill, Wordmark, seo } from "@/components/site";
-import type { Rec } from "@/data/mock";
+import { BUSINESS, type Rec } from "@/data/mock";
 
 export const Route = createFileRoute("/account")({
   head: () =>
@@ -18,6 +18,7 @@ function AccountPage() {
   const { user, setUser, db, toast } = useStore();
   const [tab, setTab] = useState<"login" | "register">("login");
   const [activeSection, setActiveSection] = useState<"profile" | "idcard" | "subs" | "progress" | "orders">("idcard");
+  const [receiptItem, setReceiptItem] = useState<Rec | null>(null);
 
   // Login form state
   const [loginEmail, setLoginEmail] = useState("");
@@ -33,9 +34,13 @@ function AccountPage() {
     academy: "Shiroli Karate Dojo",
   });
 
-  // BMI state in account
+  // BMI & Body Measurements state in account
   const [height, setHeight] = useState("175");
   const [weight, setWeight] = useState("72");
+  const [chest, setChest] = useState("98");
+  const [waist, setWaist] = useState("82");
+  const [bodyFat, setBodyFat] = useState("18");
+
   const bmiVal = +height > 0 && +weight > 0 ? +weight / ((+height / 100) ** 2) : 0;
   const bmiStatus = bmiVal < 18.5 ? "Underweight" : bmiVal < 25 ? "Normal" : bmiVal < 30 ? "Overweight" : "Obese";
 
@@ -90,9 +95,6 @@ function AccountPage() {
 
   const memberAttendance = (db.attendance ?? []).filter(
     (a: Rec) => a.member.toLowerCase() === memberRecord.name.toLowerCase()
-  );
-  const memberProgress = (db.progress ?? []).filter(
-    (p: Rec) => p.member.toLowerCase() === "rohit sawant" || p.member.toLowerCase() === memberRecord.name.toLowerCase()
   );
   const memberOrders = (db.orders ?? []).filter(
     (o: Rec) => o.customer.toLowerCase() === memberRecord.name.toLowerCase() || o.customer === "Aarav Kasabe"
@@ -332,7 +334,6 @@ function AccountPage() {
               <div className="grid items-start gap-8 lg:grid-cols-[420px_1fr]">
                 {/* ID Card Graphic */}
                 <div className="card relative overflow-hidden rounded-2xl border-2 border-primary/40 bg-navy p-6 text-navy-foreground shadow-2xl">
-                  {/* Watermark Logo */}
                   <div className="absolute -right-8 -top-8 h-36 w-36 rounded-full bg-primary/10 blur-xl pointer-events-none" />
 
                   <div className="flex items-center justify-between border-b border-navy-2 pb-4">
@@ -488,50 +489,90 @@ function AccountPage() {
             {activeSection === "subs" && (
               <div className="space-y-6">
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                  <div className="card p-6 border-2 border-primary/30">
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs font-bold uppercase tracking-wider text-primary">Academy Plan</span>
-                      <Badge tone="ok">Active</Badge>
+                  <div className="card p-6 border-2 border-primary/30 flex flex-col justify-between">
+                    <div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs font-bold uppercase tracking-wider text-primary">Academy Plan</span>
+                        <Badge tone="ok">Active</Badge>
+                      </div>
+                      <h4 className="mt-2 text-2xl font-bold">Shiroli Karate Dojo</h4>
+                      <p className="mt-1 text-sm text-muted-foreground">Quarterly Advanced Training Batch</p>
+                      <p className="mt-4 font-display text-3xl font-bold">₹3,200 <span className="text-xs font-normal text-muted-foreground">/ quarter</span></p>
+                      <p className="mt-2 text-xs text-muted-foreground">Renews on 30 Nov 2026</p>
                     </div>
-                    <h4 className="mt-2 text-2xl font-bold">Shiroli Karate Dojo</h4>
-                    <p className="mt-1 text-sm text-muted-foreground">Quarterly Advanced Training Batch</p>
-                    <p className="mt-4 font-display text-3xl font-bold">₹3,200 <span className="text-xs font-normal text-muted-foreground">/ quarter</span></p>
-                    <p className="mt-2 text-xs text-muted-foreground">Renews on 30 Nov 2026</p>
-                    <button
-                      type="button"
-                      onClick={() => toast("Renewal fee demo processed")}
-                      className="btn btn-primary mt-4 w-full"
-                    >
-                      Renew Subscription
-                    </button>
+                    <div className="mt-4 pt-3 border-t flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setReceiptItem({
+                            id: "SUB-REC-2601",
+                            customer: memberRecord.name,
+                            items: "Shiroli Karate Dojo — Quarterly Membership",
+                            total: 3200,
+                            date: "2026-09-01",
+                            payment: "UPI Auto-Debit (demo)",
+                          })
+                        }
+                        className="btn btn-outline flex-1 !py-1.5 !text-xs"
+                      >
+                        Receipt
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => toast("Renewal fee demo processed")}
+                        className="btn btn-primary flex-1 !py-1.5 !text-xs"
+                      >
+                        Renew
+                      </button>
+                    </div>
                   </div>
 
-                  <div className="card p-6">
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Gym Access</span>
-                      <Badge tone="warn">Expiring Soon</Badge>
+                  <div className="card p-6 flex flex-col justify-between">
+                    <div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Gym Access</span>
+                        <Badge tone="warn">Expiring Soon</Badge>
+                      </div>
+                      <h4 className="mt-2 text-2xl font-bold">Iron Pulse Fitness</h4>
+                      <p className="mt-1 text-sm text-muted-foreground">Monthly All-Access Pass</p>
+                      <p className="mt-4 font-display text-3xl font-bold">₹1,200 <span className="text-xs font-normal text-muted-foreground">/ month</span></p>
+                      <p className="mt-2 text-xs text-destructive font-semibold">Expires in 6 days (31 Oct)</p>
                     </div>
-                    <h4 className="mt-2 text-2xl font-bold">Iron Pulse Fitness</h4>
-                    <p className="mt-1 text-sm text-muted-foreground">Monthly All-Access Pass</p>
-                    <p className="mt-4 font-display text-3xl font-bold">₹1,200 <span className="text-xs font-normal text-muted-foreground">/ month</span></p>
-                    <p className="mt-2 text-xs text-destructive font-semibold">Expires in 6 days (31 Oct)</p>
-                    <button
-                      type="button"
-                      onClick={() => toast("Gym membership extended by 1 month")}
-                      className="btn btn-outline mt-4 w-full"
-                    >
-                      Extend Gym Pass
-                    </button>
+                    <div className="mt-4 pt-3 border-t flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setReceiptItem({
+                            id: "SUB-REC-2602",
+                            customer: memberRecord.name,
+                            items: "Iron Pulse Fitness — Monthly All-Access Pass",
+                            total: 1200,
+                            date: "2026-10-01",
+                            payment: "Debit Card (demo)",
+                          })
+                        }
+                        className="btn btn-outline flex-1 !py-1.5 !text-xs"
+                      >
+                        Receipt
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => toast("Gym membership extended by 1 month")}
+                        className="btn btn-outline flex-1 !py-1.5 !text-xs"
+                      >
+                        Extend
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* Tab 4: Fitness & BMI */}
+            {/* Tab 4: Fitness & BMI + Body Measurements */}
             {activeSection === "progress" && (
               <div className="grid gap-6 lg:grid-cols-2">
                 <div className="card p-6">
-                  <h3 className="text-xl font-bold uppercase">BMI Calculator & Assessment</h3>
+                  <h3 className="text-xl font-bold uppercase">BMI & Body Measurements</h3>
                   <div className="mt-4 grid grid-cols-2 gap-4">
                     <div>
                       <label className="text-xs font-bold uppercase text-muted-foreground">Height (cm)</label>
@@ -553,15 +594,51 @@ function AccountPage() {
                     </div>
                   </div>
 
-                  <div className="mt-6 flex items-baseline gap-4">
-                    <p className="font-display text-5xl font-black text-primary">
-                      {bmiVal ? bmiVal.toFixed(1) : "—"}
-                    </p>
-                    {bmiVal > 0 && <Badge tone={bmiStatus === "Normal" ? "ok" : "warn"}>{bmiStatus}</Badge>}
+                  <div className="mt-3 grid grid-cols-3 gap-3">
+                    <div>
+                      <label className="text-xs font-bold uppercase text-muted-foreground">Chest (cm)</label>
+                      <input
+                        type="number"
+                        value={chest}
+                        onChange={(e) => setChest(e.target.value)}
+                        className="field mt-1"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold uppercase text-muted-foreground">Waist (cm)</label>
+                      <input
+                        type="number"
+                        value={waist}
+                        onChange={(e) => setWaist(e.target.value)}
+                        className="field mt-1"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold uppercase text-muted-foreground">Body Fat (%)</label>
+                      <input
+                        type="number"
+                        value={bodyFat}
+                        onChange={(e) => setBodyFat(e.target.value)}
+                        className="field mt-1"
+                      />
+                    </div>
                   </div>
-                  <p className="mt-2 text-xs text-muted-foreground">
-                    Based on WHO BMI classifications for active adults.
-                  </p>
+
+                  <div className="mt-6 flex items-baseline justify-between pt-2">
+                    <div>
+                      <p className="font-display text-5xl font-black text-primary">
+                        {bmiVal ? bmiVal.toFixed(1) : "—"}
+                      </p>
+                      {bmiVal > 0 && <Badge tone={bmiStatus === "Normal" ? "ok" : "warn"}>{bmiStatus}</Badge>}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => toast("Measurements updated in profile (demo)")}
+                      className="btn btn-outline !text-xs"
+                    >
+                      Save Measurements
+                    </button>
+                  </div>
                 </div>
 
                 <div className="card p-6">
@@ -616,9 +693,18 @@ function AccountPage() {
                             <p className="font-mono font-bold text-sm">{o.id}</p>
                             <p className="text-xs text-muted-foreground">{o.items} · {o.date}</p>
                           </div>
-                          <div className="text-right">
-                            <p className="font-bold">{inr(o.total)}</p>
-                            <StatusPill s={o.status} />
+                          <div className="flex items-center gap-3">
+                            <div className="text-right">
+                              <p className="font-bold">{inr(o.total)}</p>
+                              <StatusPill s={o.status} />
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => setReceiptItem(o)}
+                              className="btn btn-outline !py-1 !px-2.5 !text-xs"
+                            >
+                              Receipt
+                            </button>
                           </div>
                         </div>
                       ))}
@@ -649,6 +735,87 @@ function AccountPage() {
           </div>
         )}
       </Section>
+
+      {/* Digital Payment Receipt Modal */}
+      <Modal open={!!receiptItem} onClose={() => setReceiptItem(null)} title={`Tax Invoice & Receipt — ${receiptItem?.id ?? ""}`} wide>
+        {receiptItem && (
+          <div className="space-y-6">
+            <div className="card p-6 border bg-background text-foreground space-y-4">
+              <div className="flex flex-wrap items-start justify-between gap-4 border-b pb-4">
+                <div>
+                  <Wordmark />
+                  <p className="text-xs text-muted-foreground mt-1">{BUSINESS.hq}</p>
+                  <p className="text-[11px] text-muted-foreground">{BUSINESS.address}</p>
+                  <p className="text-[11px] text-muted-foreground">GSTIN (Demo): 27AABCK1234F1Z8</p>
+                </div>
+                <div className="text-right">
+                  <span className="inline-block rounded bg-primary/10 px-2.5 py-1 text-xs font-bold text-primary uppercase">
+                    Paid (Demo Receipt)
+                  </span>
+                  <p className="font-mono text-xs font-bold mt-2">Invoice: INV-{receiptItem.id}</p>
+                  <p className="text-xs text-muted-foreground">Date: {receiptItem.date}</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 text-xs border-b pb-4">
+                <div>
+                  <p className="text-muted-foreground font-semibold">Billed To:</p>
+                  <p className="font-bold text-foreground text-sm mt-0.5">{receiptItem.customer || user?.name}</p>
+                  <p className="text-muted-foreground mt-0.5">{user?.phone || "+91 98220 00000"}</p>
+                </div>
+                <div>
+                  <p className="text-muted-foreground font-semibold">Payment Details:</p>
+                  <p className="font-bold text-foreground mt-0.5">{receiptItem.payment || "UPI Auto-Debit (demo)"}</p>
+                  <p className="font-mono text-muted-foreground text-[11px]">Txn Ref: TXN-KLW-{Date.now().toString().slice(-6)}</p>
+                </div>
+              </div>
+
+              <div className="text-xs space-y-2">
+                <div className="flex justify-between font-bold border-b pb-1 text-muted-foreground">
+                  <span>Description</span>
+                  <span>Amount</span>
+                </div>
+                <div className="flex justify-between py-1">
+                  <span>{receiptItem.items}</span>
+                  <span className="font-mono">{inr(Math.round(receiptItem.total / 1.18))}</span>
+                </div>
+                <div className="flex justify-between py-1 text-muted-foreground">
+                  <span>Integrated GST (18%)</span>
+                  <span className="font-mono">{inr(receiptItem.total - Math.round(receiptItem.total / 1.18))}</span>
+                </div>
+                <div className="flex justify-between border-t pt-2 text-sm font-black">
+                  <span>Total Paid (INR)</span>
+                  <span className="font-mono text-primary text-base">{inr(receiptItem.total)}</span>
+                </div>
+              </div>
+
+              <div className="rounded-lg bg-muted/50 p-3 text-[11px] text-muted-foreground text-center">
+                This is a computer-generated demonstration receipt for KALAWAR Sports prototype transactions.
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2">
+              <button
+                type="button"
+                onClick={() => toast("Receipt PDF dispatched to download queue (demo)")}
+                className="btn btn-outline !text-xs"
+              >
+                <Icon name="download" className="h-4 w-4" />
+                Download PDF
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  window.print();
+                }}
+                className="btn btn-primary !text-xs"
+              >
+                Print Receipt
+              </button>
+            </div>
+          </div>
+        )}
+      </Modal>
     </Site>
   );
 }

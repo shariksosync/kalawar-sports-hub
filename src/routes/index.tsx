@@ -29,6 +29,35 @@ function Home() {
   const [course, setCourse] = useState(false);
   return (
     <Site>
+      {/* Dynamic Active Announcement Strip from Admin Banners */}
+      {(db.banners ?? [])
+        .filter(
+          (b: Rec) =>
+            b.status === "Active" &&
+            (b.section === "Home Strip" || b.section === "Home Hero")
+        )
+        .map((b: Rec) => (
+          <aside
+            key={b.id}
+            aria-label="Promotional Announcement"
+            className="border-b border-primary/30 bg-primary/10 px-4 py-2.5 text-center text-xs font-bold sm:text-sm"
+          >
+            <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-2">
+              <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-primary" />
+              <span className="font-extrabold uppercase tracking-wider text-primary">
+                Live Announcement:
+              </span>
+              <span className="text-foreground">{b.title}</span>
+              <Link
+                to="/championships"
+                className="ml-1 font-bold text-primary underline hover:text-primary/80"
+              >
+                View Details &rarr;
+              </Link>
+            </div>
+          </aside>
+        ))}
+
       {/* Hero */}
       <section className="relative overflow-hidden bg-navy text-navy-foreground">
         <Img k="hero" alt="Martial arts athletes training in a multi-sport arena" eager className="absolute inset-0 h-full w-full" />

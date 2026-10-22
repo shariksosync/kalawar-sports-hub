@@ -138,6 +138,12 @@ function AdminDashboard() {
   // Quick form inputs
   const [formData, setFormData] = useState<Rec>({});
 
+  // Tab 11 Settings States: Banners & Sports
+  const [newBannerTitle, setNewBannerTitle] = useState("");
+  const [newBannerSection, setNewBannerSection] = useState("Home Strip");
+  const [newSportName, setNewSportName] = useState("");
+  const [newSportImg, setNewSportImg] = useState("martial");
+
   // Filter allowed tabs based on active demo role
   const allowedModules = useMemo(() => {
     return (
@@ -1694,6 +1700,243 @@ function AdminDashboard() {
                         }}
                         className="field mt-1 !text-xs font-semibold"
                       />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Homepage & Promotional Banners Manager */}
+              <div className="card p-6 shadow-sm space-y-4">
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b pb-3">
+                  <div>
+                    <h3 className="font-display text-lg font-bold uppercase">
+                      Homepage & Promotional Banners
+                    </h3>
+                    <p className="text-xs text-muted-foreground">
+                      Control active announcement strips and promotional hero alerts across the portal
+                    </p>
+                  </div>
+                  <Badge tone="navy">{(db.banners ?? []).length} Banners</Badge>
+                </div>
+
+                {/* Add Banner Inline Form */}
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    if (!newBannerTitle.trim()) return;
+                    upsert("banners", {
+                      id: uid("BN"),
+                      title: newBannerTitle.trim(),
+                      section: newBannerSection,
+                      status: "Active",
+                    });
+                    toast(`Created banner "${newBannerTitle.trim()}"`);
+                    setNewBannerTitle("");
+                  }}
+                  className="flex flex-wrap items-center gap-3 rounded-xl border bg-muted/20 p-4"
+                >
+                  <div className="flex-1 min-w-[200px]">
+                    <label className="block text-[11px] font-bold uppercase text-muted-foreground">
+                      Banner Title / Announcement Text
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. State Championship Registrations Closing Soon"
+                      value={newBannerTitle}
+                      onChange={(e) => setNewBannerTitle(e.target.value)}
+                      className="field mt-1 !text-xs"
+                      required
+                    />
+                  </div>
+                  <div className="w-48">
+                    <label className="block text-[11px] font-bold uppercase text-muted-foreground">
+                      Placement Section
+                    </label>
+                    <select
+                      value={newBannerSection}
+                      onChange={(e) => setNewBannerSection(e.target.value)}
+                      className="field mt-1 !text-xs font-semibold"
+                    >
+                      <option>Home Strip</option>
+                      <option>Home Hero</option>
+                      <option>Global Header</option>
+                      <option>Championships</option>
+                    </select>
+                  </div>
+                  <div className="self-end">
+                    <button type="submit" className="btn btn-primary !py-2 !px-4 !text-xs">
+                      <Icon name="plus" className="h-4 w-4" />
+                      Add Banner
+                    </button>
+                  </div>
+                </form>
+
+                {/* Banners List */}
+                <div className="space-y-3">
+                  {(db.banners ?? []).map((b: Rec) => (
+                    <div
+                      key={b.id}
+                      className="flex flex-wrap items-center justify-between gap-4 rounded-xl border p-4 hover:bg-muted/10 transition-colors"
+                    >
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono text-xs font-bold text-primary">{b.id}</span>
+                          <Badge tone="navy">{b.section}</Badge>
+                          <StatusPill s={b.status} />
+                        </div>
+                        <p className="mt-1 font-bold text-sm text-foreground">{b.title}</p>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const nextStatus = b.status === "Active" ? "Inactive" : "Active";
+                            upsert("banners", { ...b, status: nextStatus });
+                            toast(`Banner ${b.id} set to ${nextStatus}`);
+                          }}
+                          className={`btn !py-1 !px-3 !text-xs ${
+                            b.status === "Active" ? "btn-outline text-success" : "btn-outline text-muted-foreground"
+                          }`}
+                        >
+                          {b.status === "Active" ? "Deactivate" : "Activate"}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setConfirmDelete({ col: "banners", id: b.id, name: b.title })}
+                          className="rounded p-2 text-destructive hover:bg-destructive/10"
+                          title="Delete Banner"
+                        >
+                          <Icon name="trash" className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Configurable Sports Disciplines & Categories Engine */}
+              <div className="card p-6 shadow-sm space-y-4">
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b pb-3">
+                  <div>
+                    <h3 className="font-display text-lg font-bold uppercase">
+                      Configurable Sports Disciplines & Categories
+                    </h3>
+                    <p className="text-xs text-muted-foreground">
+                      Register sports disciplines and combat forms dynamically across academy directories, filters, and championships
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge tone="navy">{(db.sports ?? []).length} Disciplines</Badge>
+                    <button
+                      type="button"
+                      onClick={() => downloadCSV("kalawar-sports-categories", db.sports ?? [])}
+                      className="btn btn-outline !py-1 !px-2.5 !text-xs"
+                    >
+                      <Icon name="download" className="h-4 w-4" />
+                      Export CSV
+                    </button>
+                  </div>
+                </div>
+
+                {/* Quick Add Sport Category */}
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    if (!newSportName.trim()) return;
+                    const exists = (db.sports ?? []).some(
+                      (s: Rec) => s.name.toLowerCase() === newSportName.trim().toLowerCase()
+                    );
+                    if (exists) {
+                      toast(`Sport "${newSportName.trim()}" is already registered`);
+                      return;
+                    }
+                    upsert("sports", {
+                      id: uid("SP"),
+                      name: newSportName.trim(),
+                      status: "Active",
+                      img: newSportImg,
+                    });
+                    toast(`Registered new sport category: ${newSportName.trim()}`);
+                    setNewSportName("");
+                  }}
+                  className="flex flex-wrap items-center gap-3 rounded-xl border bg-muted/20 p-4"
+                >
+                  <div className="flex-1 min-w-[180px]">
+                    <label className="block text-[11px] font-bold uppercase text-muted-foreground">
+                      Sport Discipline Name
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Archery, Shooting, Fencing, Judo, Wushu, Kickboxing"
+                      value={newSportName}
+                      onChange={(e) => setNewSportName(e.target.value)}
+                      className="field mt-1 !text-xs"
+                      required
+                    />
+                  </div>
+                  <div className="w-48">
+                    <label className="block text-[11px] font-bold uppercase text-muted-foreground">
+                      Visual / Sport Theme
+                    </label>
+                    <select
+                      value={newSportImg}
+                      onChange={(e) => setNewSportImg(e.target.value)}
+                      className="field mt-1 !text-xs font-semibold"
+                    >
+                      <option value="martial">Martial Arts & Combat</option>
+                      <option value="gym">Gym & Fitness</option>
+                      <option value="hero">Team & Field</option>
+                      <option value="gear">Equipment & Gear</option>
+                    </select>
+                  </div>
+                  <div className="self-end">
+                    <button type="submit" className="btn btn-primary !py-2 !px-4 !text-xs">
+                      <Icon name="plus" className="h-4 w-4" />
+                      Register Sport
+                    </button>
+                  </div>
+                </form>
+
+                {/* Sports Grid */}
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 max-h-[360px] overflow-y-auto p-1">
+                  {(db.sports ?? []).map((s: Rec) => (
+                    <div
+                      key={s.id}
+                      className="flex items-center justify-between gap-2 rounded-xl border p-3 hover:border-primary/40 transition-colors"
+                    >
+                      <div>
+                        <p className="font-bold text-xs text-foreground">{s.name}</p>
+                        <div className="flex items-center gap-1.5 mt-0.5">
+                          <span className="font-mono text-[10px] text-muted-foreground">{s.id}</span>
+                          <span className="text-[10px] text-muted-foreground">· {s.img}</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const nextStatus = s.status === "Active" ? "Inactive" : "Active";
+                            upsert("sports", { ...s, status: nextStatus });
+                            toast(`${s.name} is now ${nextStatus}`);
+                          }}
+                          className={`rounded px-2 py-0.5 text-[10px] font-bold border transition-colors ${
+                            s.status === "Active"
+                              ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                              : "border-muted bg-muted text-muted-foreground"
+                          }`}
+                        >
+                          {s.status ?? "Active"}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setConfirmDelete({ col: "sports", id: s.id, name: s.name })}
+                          className="rounded p-1 text-destructive hover:bg-destructive/10"
+                          title={`Delete ${s.name}`}
+                        >
+                          <Icon name="trash" className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>

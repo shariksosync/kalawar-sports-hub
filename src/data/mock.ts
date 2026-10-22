@@ -158,9 +158,9 @@ export const initialDb: Record<string, Rec[]> = {
     { id: "AT3", member: "Rohit Sawant", place: "Iron Pulse Fitness", date: "2026-10-21", status: "Present" },
   ],
   progress: [
-    { id: "FP1", member: "Rohit Sawant", date: "2026-08-01", weight: 86, height: 175, bodyFat: 24 },
-    { id: "FP2", member: "Rohit Sawant", date: "2026-09-01", weight: 83, height: 175, bodyFat: 22 },
-    { id: "FP3", member: "Rohit Sawant", date: "2026-10-01", weight: 81, height: 175, bodyFat: 20 },
+    { id: "FP1", member: "Rohit Sawant", date: "2026-08-01", weight: 86, height: 175, bodyFat: 24, chest: 104, waist: 90 },
+    { id: "FP2", member: "Rohit Sawant", date: "2026-09-01", weight: 83, height: 175, bodyFat: 22, chest: 101, waist: 86 },
+    { id: "FP3", member: "Rohit Sawant", date: "2026-10-01", weight: 81, height: 175, bodyFat: 20, chest: 98, waist: 82 },
   ],
   courses: [
     ["Karate Foundations", "Martial Arts", "Rahul Patil", "6 weeks", "Beginner", 0],
@@ -282,6 +282,27 @@ export const initialDb: Record<string, Rec[]> = {
     { id: "terms", title: "Terms & Conditions", body: "This is a prototype. All listings, prices, events and records are sample data. Final terms will be provided by KALAWAR Sports." },
     { id: "refund", title: "Refund & Cancellation Policy", body: "Refund and cancellation requests in this demo are simulated. No money is charged or refunded. The official policy will be published before payments go live." },
     { id: "shipping", title: "Shipping Policy", body: "Shipment tracking shown in this demo is simulated and not connected to any courier. Official shipping terms will be published at launch." },
+  ],
+  dietPlans: [
+    { id: "DP1", title: "Athletic High-Protein Fuel", goal: "Hypertrophy & Strength", calories: "2600 kcal", protein: "160g", meals: 4, desc: "Lean chicken/fish, eggs, paneer, lentils, oats, peanut butter and sweet potato.", tips: "Drink 3.5L water daily; consume post-workout protein shake within 30 mins." },
+    { id: "DP2", title: "Calorie-Deficit Fat Loss Protocol", goal: "Fat Loss & Conditioning", calories: "1900 kcal", protein: "140g", meals: 3, desc: "High-fiber green salads, egg whites, soya chunks, sprouts, cucumber and brown rice.", tips: "Avoid refined sugars; include a 20-minute fasted morning mobility walk." },
+    { id: "DP3", title: "Vegetarian Combat Energy Plan", goal: "Endurance & Speed", calories: "2300 kcal", protein: "125g", meals: 4, desc: "Sattu shakes, sprouted moong, curd, tofu, almonds, bananas, and seasonal fruit.", tips: "Prioritize complex carbs 2 hours before evening sparring sessions." },
+  ],
+  ptPackages: [
+    { id: "PT1", name: "Starter PT (8 Sessions)", trainer: "Vikram More", sessions: 8, fee: 4000, desc: "Form correction, progressive compound lifting & core stabilization." },
+    { id: "PT2", name: "Pro Transformation (16 Sessions)", trainer: "Pooja Shinde", sessions: 16, fee: 7500, desc: "HIIT + resistance splits with bi-weekly body composition audit." },
+    { id: "PT3", name: "Elite Combat Conditioning (24 Sessions)", trainer: "Sensei R. Patil", sessions: 24, fee: 11000, desc: "Sparring drills, footwork, speed-bag timing and aerobic threshold." },
+  ],
+  academyRankings: [
+    { id: "AR1", academy: "Shiroli Karate Dojo", sport: "Karate", points: 2840, students: 120, gold: 14, silver: 8, bronze: 6, city: "Kolhapur" },
+    { id: "AR2", academy: "Pune Taekwondo Centre", sport: "Taekwondo", points: 2610, students: 95, gold: 11, silver: 9, bronze: 5, city: "Pune" },
+    { id: "AR3", academy: "Sangli Wrestling Akhada", sport: "Wrestling", points: 2450, students: 80, gold: 9, silver: 7, bronze: 4, city: "Sangli" },
+    { id: "AR4", academy: "Belagavi Cricket Academy", sport: "Cricket", points: 2300, students: 110, gold: 8, silver: 6, bronze: 7, city: "Belagavi" },
+  ],
+  skillRecords: [
+    { id: "SK1", member: "Aarav Kasabe", skill: "Kata Timing & Precision", score: 88, maxScore: 100, examiner: "Dr. Prakash Mane", date: "2026-09-15" },
+    { id: "SK2", member: "Aarav Kasabe", skill: "Kumite Reaction Speed", score: 92, maxScore: 100, examiner: "Sensei R. Patil", date: "2026-10-02" },
+    { id: "SK3", member: "Tanvi Joshi", skill: "Taekwondo High Kick Form", score: 85, maxScore: 100, examiner: "Coach A. Joshi", date: "2026-09-18" },
   ],
 };
 
